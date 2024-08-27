@@ -1,10 +1,7 @@
 package kr.ac.kopo.board.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -12,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = "writer")
 public class Board extends BaseEntity{
     @Id // 기본키 (primary key) 설정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 1씩 자동 증가(auto-increment)
@@ -21,6 +18,9 @@ public class Board extends BaseEntity{
     private String content;
     private String title;
 
+    // foreign key (참조 무결성 유지)
+    @ManyToOne
+    private Member writer;
 
 
 }
