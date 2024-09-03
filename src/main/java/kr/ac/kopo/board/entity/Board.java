@@ -18,8 +18,10 @@ public class Board extends BaseEntity{
     private String content;
     private String title;
 
+
+
     // foreign key (참조 무결성 유지)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member writer;
 
 
