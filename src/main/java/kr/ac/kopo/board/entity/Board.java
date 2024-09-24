@@ -25,4 +25,14 @@ public class Board extends BaseEntity{
     private Member writer;
 
 
+    //  변경된 제목으로 수정
+    public void changeTitle(String title){
+        this.title = title;
+    }
+
+    // 변경된 내용으로 수정
+
+    public void changeContent(String content){
+        this.content = content;
+    }
 }
