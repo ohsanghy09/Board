@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @EntityListeners(value = {AuditingEntityListener.class})
 @Getter
 abstract class BaseEntity {
+
     @CreatedDate
     @Column(name = "regDate", updatable = false)
-    private LocalDateTime regDate;  // 등록 날짜 및 시간
+    private LocalDateTime regDate;//등록한 날짜및시간
 
     @LastModifiedDate
     @Column(name = "modDate")
-    private LocalDateTime modDate;  // 수정 날짜 및 시간
-
+    private LocalDateTime modDate;//수정한 날짜및 시간
 }

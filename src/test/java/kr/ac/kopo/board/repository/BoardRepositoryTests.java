@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -23,27 +22,28 @@ public class BoardRepositoryTests {
     private BoardRepository boardRepository;
 
     @Test
-    public void insertMembers(){
-        IntStream.rangeClosed(1, 100).forEach(i -> {
+    public void insertBoard(){
+        IntStream.rangeClosed(1, 100).forEach(i ->{
             Member member = Member.builder()
                     .email("user"+i+"@kopo.ac.kr")
                     .build();
 
-
             Board board = Board.builder()
-                    .title("Title "+i)
-                    .content("Content "+i)
+                    .title("Title  " + i)
+                    .content("Content "+ i)
                     .writer(member)
                     .build();
 
             boardRepository.save(board);
         });
     }
+
     @Transactional
     @Test
     public void testRead(){
         Optional<Board> result = boardRepository.findById(5L);
         Board board = result.get();
+
         System.out.println(board);
         System.out.println(board.getWriter());
     }
@@ -56,7 +56,7 @@ public class BoardRepositoryTests {
     }
 
     @Test
-    public void testReadWithReply(){
+    public void testReadWithReply() {
 
         List<Object[]> result = boardRepository.getBoardWithReply(77L);
         for (Object[] arr: result){
@@ -65,11 +65,11 @@ public class BoardRepositoryTests {
     }
 
     @Test
-    public void testBoardWithReplyCount(){
+    public void testWithReplyCount(){
         Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
         Page<Object[]> result = boardRepository.getBoardWithReplyCount(pageable);
 
-        result.get().forEach(row  -> {
+        result.get().forEach(row ->{
             Object[] arr = (Object[]) row;
             System.out.println(Arrays.toString(arr));
         });
@@ -82,5 +82,15 @@ public class BoardRepositoryTests {
         System.out.println(Arrays.toString(arr));
     }
 
+    @Test
+    public void testSearch1(){
+        boardRepository.search1();
+    }
 
-} // main
+    @Test
+    public void testSearchPage(){
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("bno").descending());
+        boardRepository.searchPage("t", "5", pageable);
+    }
+
+}

@@ -17,21 +17,22 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-
-public class BoardServiceImpl implements BoardService {
+public class BoardServiceImpl implements BoardService{
     private final BoardRepository repository;
     private final ReplyRepository replyRepository;
+
     @Override
-    public Long register(BoardDTO dto){
+    public Long register(BoardDTO dto) {
         Board board = dtoToEntity(dto);
         repository.save(board);
+
         return board.getBno();
     }
 
     @Override
     public PageResultDTO<BoardDTO, Object[]> getList(PageRequestDTO pageRequestDTO) {
 
-        Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board)en[0], (Member)en[1], (Long) en[2]));
+        Function<Object[], BoardDTO> fn = (en -> entityToDTO((Board) en[0], (Member) en[1], (Long) en[2]));
         Page<Object[]> result = repository.getBoardWithReplyCount(pageRequestDTO.getPageable(Sort.by("bno").descending()));
 
         return new PageResultDTO<>(result, fn);
@@ -50,9 +51,9 @@ public class BoardServiceImpl implements BoardService {
     @Transactional
     @Override
     public void removeWithReplies(Long bno) {
-        // 댓글 삭제
+//        댓글삭제
         replyRepository.deleteByBno(bno);
-        // 원글 삭제
+//        원글삭제
         repository.deleteById(bno);
     }
 

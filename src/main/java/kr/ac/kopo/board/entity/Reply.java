@@ -11,15 +11,14 @@ import lombok.*;
 @ToString(exclude = "board")
 public class Reply extends BaseEntity{
 
-    @Id // 기본키 (primary key) 설정
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 1씩 자동 증가(auto-increment)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rno;
 
     private String text;
 
     private String replyer;
 
-    //foreign key (참조 무결성 유지)
     @ManyToOne
-    private Board board;
+    private Board board;//Foreign Key  설정(참조무결성 유지)
 }
